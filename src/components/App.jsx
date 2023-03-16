@@ -1,6 +1,9 @@
 import React, { Component } from "react";
-import { nanoid } from 'nanoid'
-import { ContactForm } from './ContactForm/ContactForm'
+import { nanoid } from 'nanoid';
+import { ContactForm } from './ContactForm/ContactForm';
+import { ContactFilter } from './ContactFilter/ContactFilter';
+import { ContactList } from "./ContactList/ContactList";
+import css from './App.module.css'; 
 
 
 export class App extends Component {
@@ -28,33 +31,30 @@ export class App extends Component {
       contacts: [...prevState.contacts, newContact],
     }))
 
-    handleChange = (event) => {
+  };
+
+    handleChange = event => {
       const { value } = event.target;
       this.setState({filter: value});
     };
 
-    handleDelete = (id) => {
+    handleDelete = id => {
       this.setState(prevState => ({
         contacts: prevState.contacts.filter(newContact => newContact.id !== id),
       }))
-    }
+    };
 
     onInputFilter = () => {
       const { contacts, filter } = this.state;
       return contacts.filter(newContact => newContact.name.toLowerCase().includes(filter.toLowerCase()))
     };
-  };
+  
 
   render(){
     const onInputFilter = this.onInputFilter();
 
     return(
-      <div 
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-        }}>
+      <div className={css.container}>
           <h1>Phonebook</h1>
           <ContactForm handleSubmit={this.addContact}/>
           <h2>Contacts</h2>
